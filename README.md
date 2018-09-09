@@ -7,8 +7,9 @@ Unlike the standard international QUERTY layout, it does not do this by binding 
 keys to characters like <kbd>'</kbd> and <kbd>^</kbd>. It’s almost impossible to program
 on such layout. Instead the <kbd>AltGr</kbd> modifier is used.
 
-To use, you can build a setup package using [Microsoft Keyboard Layout Creator 1.4](https://www.microsoft.com/en-nz/download/details.aspx?id=22339).
-Although not updated anymore I think this still works on recent Windows versions.
+To use, you can build a setup package using [Microsoft Keyboard Layout Creator 1.4](https://www.microsoft.com/en-nz/download/details.aspx?id=22339)
+(aka MKLC). Although not updated anymore, and it still works on Windows 10. The generated installers
+sometimes crash after finishing installation but for now this doesn’t seem to have bad consequences.
 
 ## Characters:
 
@@ -46,3 +47,29 @@ This layout uses a few combinations of <kbd>AltGr</kbd> + _Letter_, which may in
 which use keyboard shortcuts of the form <kbd>Ctrl + Alt</kbd> + _Letter_, because of the quirky
 way AltGr is implemented in Windows.
 
+## Implementation notes
+
+There are a few things to watch out for when modifying layouts:
+
+ - A dead key plus <kbd>Space</kbd> should produce that dead key itself.
+   Eg. <kbd>AltGr + G</kbd> is assigned to `γ`, and `γ`, ` ` produces `γ`.
+ 
+ - A dead key plus that same character should not be assigned. Pressing the
+   dead key twice will normally produce that character twice.
+   
+   For this reason <kbd>AltGr + G</kbd> is not assigned to `g`: then we would have
+   `g`, `g` → `γ`, which messes with some applications.
+
+ - Some characters just don’t seem to work as dead keys. Noted so far: `–`. This
+   is why <kbd>AltGr + -</kbd> is mapped to `¯`.
+
+ - MKLC will not load your layout if a dead key is defined, but the DEADKEY section is
+   missing.
+   
+ - MKLC will refuse to generate a setup package if your layout (with the same name) is
+   currently in use. So go to settings and remove it first.
+
+ - In general developing this thing is a PITA because Windows doesn’t handle updates
+   to layouts well (in their defense it is a very unusual thing to do). Reboot in case
+   of doubt.
+   
