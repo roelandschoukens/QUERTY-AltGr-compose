@@ -52,13 +52,17 @@ way AltGr is implemented in Windows.
 There are a few things to watch out for when modifying layouts:
 
  - A dead key plus <kbd>Space</kbd> should produce that dead key itself.
-   Eg. <kbd>AltGr + G</kbd> is assigned to `γ`, and `γ`, ` ` produces `γ`.
+   Eg. <kbd>AltGr + G</kbd> is assigned to `γ`, and `γ`, _Space_ produces `γ`.
  
  - A dead key plus that same character should not be assigned. Pressing the
-   dead key twice will normally produce that character twice.
+   dead key twice will normally produce that character twice. Or maybe I should
+   just avoid assigning the same character as both normal key and dead key.
    
    For this reason <kbd>AltGr + G</kbd> is not assigned to `g`: then we would have
-   `g`, `g` → `γ`, which messes with some applications.
+   `g`, `g` → `γ`.
+   
+   The layout will not work properly with GTK+ applications if such combinations
+   are there.
 
  - Some characters just don’t seem to work as dead keys. Noted so far: `–`. This
    is why <kbd>AltGr + -</kbd> is mapped to `¯`.
@@ -67,7 +71,9 @@ There are a few things to watch out for when modifying layouts:
    missing.
    
  - MKLC will refuse to generate a setup package if your layout (with the same name) is
-   currently in use. So go to settings and remove it first.
+   currently in use. So go to settings and remove it first. And carefully keep the version
+   string and description strings in sync, otherwise things will get very confusing in the
+   control panel.
 
  - In general developing this thing is a PITA because Windows doesn’t handle updates
    to layouts well (in their defense it is a very unusual thing to do). Reboot in case
