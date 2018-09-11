@@ -30,13 +30,14 @@ for a, b in zip(latin, greek):
 emit(" ", "γ")
 print()
 
-# it seems that '–' just doesn't work, we'll use '¯' instead
-diacritics = "\u0300\u0301\u0302\u0302\u0303\u0304\u0308\u0327\u0307"
-keys = "`'^¼~¯\",."
+# Note that not all characters work as dead keys. En-dash doesn't work.
+# luckily all our combining diacritics work.
+diacritics = "\u0300\u0301\u0302\u0303\u0304\u0308\u0327\u0307\u030a\u030c"
+keys = diacritics
 
 for d, k in zip(diacritics, keys):
     print("// " + k)
-    print("DEADKEY\t{:04x}".format(ord(k)))
+    print("DEADKEY\t{:04x} ".format(ord(k)))
     print()
     for l in latin:
         a = l+d
