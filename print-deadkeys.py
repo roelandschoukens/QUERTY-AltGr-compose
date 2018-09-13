@@ -2,86 +2,103 @@
 
 # hint: use set PYTHONIOENCODING=UTF-8 to control encoding of stdout
 
-# Warning about dead keys:
-# A deadkey should not have a combination with itself. Eg. we may
-# define ` + a -> à, but we must not define ` + ` -> ?. You should
-# verify that pressing the deak key twice produces the assigned
-# character twice.
-# This is why we have γ and ¯ on our main layout, this makes sure
-# we don't define g + g -> γ
-
-# and yes, you sometimes have to reboot after rebuilding the layout.
-
-# Final note: carefully match the file name and all the version strings.
-
+import sys
 import unicodedata
 
-def emit(a, b):
-    print("{:04x}\t{:04x}\t// {} -> {}".format(ord(a), ord(b), a, b))
-
-greek = "ΑΒΧΔΕΦΓΗΙϑΚΛΜΝΟΠΘΡΣΤΥςΩΞΨΖαβχδεφγηιϕκλμνοπθρστυϖωξψζ"
 latin = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
-print("// γ")
-print("DEADKEY\t{:04x}".format(ord('γ')))
-print()
-for a, b in zip(latin, greek):
-    emit(a, b)
-emit(" ", "γ")
-print()
+# mapping of latin letters in the Symbol font
+greek = "ΑΒΧΔΕΦΓΗΙϑΚΛΜΝΟΠΘΡΣΤΥςΩΞΨΖαβχδεφγηιϕκλμνοπθρστυϖωξψζ"
 
+class DeadKey:
+    def __init__(self, name, keypress, deadkey, extras):
+        self.name = name
+        self.keypress = keypress
+        self.deadkey = deadkey
+        self.extras = extras
+
+    def isaccent(self):
+        return unicodedata.combining(self.deadkey) != 0
+        
+    def all(self):
+        """ all combinations"""
+        yield from self.extras
+        if self.isaccent():
+            for l in latin:
+                a = l + self.deadkey
+                b = unicodedata.normalize("NFC", a)
+                if len(b) == 1:
+                    yield (l, b)
+        yield (" ", self.deadkey)
+        
 # Note that not all characters work as dead keys. En-dash doesn't work.
 # luckily all our combining diacritics work.
-diacritics = "\u0300\u0301\u0302\u0303\u0304\u0308\u0327\u0307\u030a\u030c"
-keys = diacritics
+dk = [
+    DeadKey("Backtick",  "`", "\u0300", []), 
+    DeadKey("Quote",      "'", "\u0301", [
+        (",", "‚")  # ← that's a low quotation mark
+    ]),
+    DeadKey("Circumflex", "6", "\u0302", []), 
+    DeadKey("Tilde",      "Shift + `", "\u0303", []), 
+    DeadKey("Dash",     "-", "\u0304", [
+        (">", "→"),
+        ("<", "←"),
+        ("v", "↓"),
+        ("^", "↑"),
+        ("-", "–"),
+        ("_", "—"),
+        (":", "÷"),
+        ("+", "±"),
+    ]), 
+    DeadKey("Dot",  ".", "\u0307", [
+        (".", "…"),
+        ("-", "·"),
+        ("=", "•"),
+    ]), 
+    DeadKey("Double quote",  "Shift + '", "\u0308", [
+        (",", "„")
+        ]), 
+    DeadKey("Ring above", "o", "\u030a", []), 
+    DeadKey("Caron",      "Shift + 6", "\u030c", []),
+    DeadKey("Cedilla",    ",", "\u0327", []),
+    DeadKey("Mathematical characters",          "+", "×",      [
+        ("-", "−"), # minus sign (subtly different from en dash)
+        ("<", "≤"),
+        (">", "≥"),
+        ("/", "≠"),
+        ("~", "≈"),
+        ("v", "√"),
+        ("o", "°"),
+        ("'", "′"),
+        ('"', "″"),
+        ("8", "∞"),
+        ("D", "∆"),
+        ("d", "∂"),
+        ("s", "∫"),
+        ("S", "∑"),
+        ("P", "∏"),
+    ]),
+    DeadKey("Greek", "g", "γ", list(zip(latin, greek))),
+]
 
-for d, k in zip(diacritics, keys):
-    print("// " + k)
-    print("DEADKEY\t{:04x} ".format(ord(k)))
-    print()
-    for l in latin:
-        a = l+d
-        b = unicodedata.normalize("NFC", a)
-        if len(b) == 1:
-            emit(l, b)
+what = sys.argv[1] if len(sys.argv) == 2 else ""
 
-    if (k == "'"):
-        emit(",", "‚")   # ← that's a low quotation mark
-    if (k == "\""):
-        emit(",", "„")
-
-    if (k == "¯"):
-        emit(">", "→")
-        emit("<", "←")
-        emit("v", "↓")
-        emit("^", "↑")
-        emit("-", "–")
-        emit("_", "—")
-        emit(":", "÷")
-        emit("+", "±")
-
-    if (k == "."):
-        emit(".", "…")
-        emit("-", "·")
-        emit("=", "•")
-    
-    emit(" ", k)
-    print()
-
-print("// ×")
-print("DEADKEY\t{:04x}".format(ord("×")))
-emit("<", "≤")
-emit(">", "≥")
-emit("/", "≠")
-emit("~", "≈")
-emit("v", "√")
-emit("o", "°")
-emit("'", "′")
-emit("\"", "″")
-emit("8", "∞")
-emit("D", "∆")
-emit("d", "∂")
-emit("s", "∫")
-emit(" ", "×")
-
-print()
+if what == "klc":
+    for d in dk:
+        print("DEADKEY\t{:04x} ".format(ord(d.deadkey)))
+        print()
+        for a, b in d.all():
+            print("{:04x}\t{:04x}\t// {} -> {}".format(ord(a), ord(b), a, b))
+        print()
+elif what == "md":
+    for d in dk:
+        if not d.extras: continue
+        print("### {}: <kbd>{}</kbd>".format(d.name, d.keypress))
+        print("| base | char |")
+        print("| ---- | ---- |")
+        for a, b in d.extras:
+            if a == " ": a = "Space"
+            print("| <kbd>{}</kbd>  | {} |".format(a, b))
+        print()
+else:
+    print("Choose a format ('md' or 'klc') for printing the list of dead keys")

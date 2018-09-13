@@ -1,6 +1,6 @@
 # QUERTY-AltGr-compose
 
-This keyboard layout adds accented letters (àêï), punctuation (—“”) and more to the standard QUERTY layout.
+This keyboard layout adds accented letters (à ê ï), punctuation (— “ ”) and more to the standard QUERTY layout.
 Useful for those who want to shake their [typewriter habits](https://practicaltypography.com/typewriter-habits.html).
 
 Unlike the standard international QUERTY layout, it does not do this by binding dead
@@ -32,7 +32,7 @@ sometimes crash after finishing installation but for now this doesn’t seem to 
     One of these dead keys followed by <kbd>Space</kbd> will produce a combining mark. Unfortunately those 
     marks have     to come after the letter, which creates the awkward situation that <kbd>AltGr + 
     a</kbd>, <kbd>A</kbd> produces ā as     expected, but <kbd>AltGr + -</kbd>, <kbd>X</kbd> produces the 
-    characters in the wrong order. Too bad, but I don’t know how     to produce a full-blown IME.
+    characters in the wrong order. Too bad, but I don’t know how to produce a full-blown IME.
 
   - Non-ASCII quotes (“, ”, «, ») are mapped to the 3d and 4th positions on the various kinds of brackets.
   
@@ -44,7 +44,7 @@ sometimes crash after finishing installation but for now this doesn’t seem to 
   
   - The <kbd>-</kbd> and <kbd>.</kbd> dead keys also include a few punctuation characters (en-dash, ellipsis, arrows, …).
 
-`print-deadkeys.py` generates those lists of dead key combinations.
+See the list of [other dead key combinations](keys.md).
 
 ## Caveat
 
@@ -69,8 +69,7 @@ There are a few things to watch out for when modifying layouts:
    The layout will not work properly with GTK+ applications if such combinations
    are there.
 
- - Some characters just don’t seem to work as dead keys. Noted so far: `–`. This
-   is why <kbd>AltGr + -</kbd> is mapped to `¯`.
+ - Some characters just don’t seem to work as dead keys. Noted so far: `–` (en dash).
 
  - MKLC will not load your layout if a dead key is defined, but the DEADKEY section is
    missing.
@@ -81,6 +80,10 @@ There are a few things to watch out for when modifying layouts:
    control panel.
 
  - In general developing this thing is a PITA because Windows doesn’t handle updates
-   to layouts well (in their defence it is a very unusual thing to do). Reboot in case
-   of doubt.
+   to layouts well (in their defence it is a very unusual thing to do). To install a new
+   version:
    
+    - uninstall current version
+    - reboot
+    - install new version
+    - reboot and cross your fingers
