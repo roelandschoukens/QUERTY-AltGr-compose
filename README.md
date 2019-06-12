@@ -3,7 +3,7 @@
 This keyboard layout adds accented letters (à ê ï ō ç ž), punctuation (— “ ”) and more to the standard QUERTY layout.
 Useful for those who want to shake their [typewriter habits](https://practicaltypography.com/typewriter-habits.html).
 
-For those living in New Zealand, you can at last properly type Maōri place names.
+For those living in New Zealand, you can at last properly type Māori place names.
 
 Unlike the standard international QUERTY layout, it does not do this by binding dead
 keys to characters like <kbd>'</kbd> and <kbd>^</kbd>. It’s almost impossible to program
