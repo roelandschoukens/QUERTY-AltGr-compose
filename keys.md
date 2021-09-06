@@ -1,11 +1,27 @@
-# Keys
+# All key combinations
 
 ## Combinations with dead keys
+
+### Backtick: <kbd>`</kbd>
+| base | char | name     |
+| ---- | ---- | -------- |
+| _letter_  | à | letter with grave accent |
 
 ### Quote: <kbd>'</kbd>
 | base | char | name     |
 | ---- | ---- | -------- |
 | <kbd>,</kbd>  | ‚ | single low-9 quotation mark |
+| _letter_  | á | letter with acute accent |
+
+### Circumflex: <kbd>6</kbd>
+| base | char | name     |
+| ---- | ---- | -------- |
+| _letter_  | â | letter with circumflex accent |
+
+### Tilde: <kbd>Shift + `</kbd>
+| base | char | name     |
+| ---- | ---- | -------- |
+| _letter_  | ã | letter with tilde |
 
 ### Dash: <kbd>-</kbd>
 | base | char | name     |
@@ -18,6 +34,7 @@
 | <kbd>_</kbd>  | — | em dash |
 | <kbd>:</kbd>  | ÷ | division sign |
 | <kbd>+</kbd>  | ± | plus-minus sign |
+| _letter_  | ā | letter with macron |
 
 ### Dot: <kbd>.</kbd>
 | base | char | name     |
@@ -25,11 +42,28 @@
 | <kbd>.</kbd>  | … | horizontal ellipsis |
 | <kbd>-</kbd>  | · | middle dot |
 | <kbd>=</kbd>  | • | bullet |
+| _letter_  | ȧ | letter with dot above |
 
 ### Double quote: <kbd>Shift + '</kbd>
 | base | char | name     |
 | ---- | ---- | -------- |
 | <kbd>,</kbd>  | „ | double low-9 quotation mark |
+| _letter_  | ä | letter with diaeresis |
+
+### Ring above: <kbd>o</kbd>
+| base | char | name     |
+| ---- | ---- | -------- |
+| _letter_  | å | letter with ring above |
+
+### Caron: <kbd>Shift + 6</kbd>
+| base | char | name     |
+| ---- | ---- | -------- |
+| _letter_  | ǎ | letter with caron |
+
+### Cedilla: <kbd>,</kbd>
+| base | char | name     |
+| ---- | ---- | -------- |
+| _letter_  | ç | letter with cedilla |
 
 ### Mathematical characters: <kbd>+</kbd>
 | base | char | name     |
@@ -51,7 +85,7 @@
 | <kbd>S</kbd>  | ∑ | n-ary summation |
 | <kbd>P</kbd>  | ∏ | n-ary product |
 
-### Greek: <kbd>g</kbd>
+### Greek letters: <kbd>g</kbd>
 | base | char | name     |
 | ---- | ---- | -------- |
 | <kbd>A</kbd>  | Α | greek capital letter alpha |
